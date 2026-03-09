@@ -1,0 +1,15 @@
+config.php
+.env
+.DS_Store
+Thumbs.db
+*~
+*.swp
+
+.vscode/
+.idea/
+*.log
+*.tmp
+
+uploads/
+node_modules/
+vendor/
