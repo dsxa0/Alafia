@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إدارة العافية</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css">
+    
+    <script>
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    colors: { 
+                        medical: { 
+                            DEFAULT: '#0ea5e9', 
+                            dark: '#0284c7', 
+                            green: '#10b981' 
+                        } 
+                    } 
+                } 
+            } 
+        }
+    </script>
+</head>
+<body class="text-gray-800 overflow-x-hidden">
+
+    <div id="login-screen" class="fixed inset-0 bg-gray-900 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white p-6 md:p-8 rounded-2xl shadow-2xl w-full max-w-md text-center">
+            <img src="assets/Gemini_Generated_Image_mdcq84mdcq84mdcq.jpg" alt="شعار العافية" class="h-20 md:h-24 mx-auto mb-6 object-contain mix-blend-multiply" onerror="this.src='https://via.placeholder.com/200x80?text=Al-Aafia'">
+            <h2 class="text-2xl font-bold mb-4">الدخول للإدارة</h2>
+            <form id="login-form" class="space-y-4">
+                <input type="password" id="admin-pass" placeholder="كلمة المرور" class="w-full px-4 py-3 border rounded focus:border-medical outline-none" required>
+                <p id="login-error" class="text-red-500 text-sm hidden">خطأ في كلمة المرور</p>
+                <button type="submit" id="login-btn" class="w-full bg-medical hover:bg-medical-dark transition text-white font-bold py-3 rounded">دخول</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard" class="hidden h-screen w-full relative" style="display:none">
+        
+        <div id="sidebar-overlay" class="fixed inset-0 bg-gray-900/50 z-40 hidden md:hidden" onclick="toggleSidebar()"></div>
+
+        <aside id="sidebar" class="fixed inset-y-0 right-0 w-64 bg-gray-900 text-white flex flex-col z-50 transform translate-x-full md:translate-x-0 md:static transition-transform duration-300 shadow-2xl md:shadow-none flex-shrink-0">
+            <div class="h-16 flex items-center justify-between md:justify-center px-4 md:px-0 border-b border-gray-800 font-bold text-xl">
+                <span><i class="fa-solid fa-shield-halved text-medical-green ml-2"></i> الإدارة</span>
+                <button onclick="toggleSidebar()" class="md:hidden text-gray-400 hover:text-white text-2xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="flex-1 py-4">
+                <button onclick="switchTab('products')" id="nav-products" class="w-full text-right px-6 py-3 hover:bg-gray-800 active-nav transition"><i class="fa-solid fa-box w-6"></i> المنتجات</button>
+                <button onclick="switchTab('categories')" id="nav-categories" class="w-full text-right px-6 py-3 hover:bg-gray-800 transition"><i class="fa-solid fa-layer-group w-6"></i> الأقسام</button>
+                <button onclick="switchTab('settings')" id="nav-settings" class="w-full text-right px-6 py-3 hover:bg-gray-800 transition"><i class="fa-solid fa-gear w-6"></i> الإعدادات</button>
+            </nav>
+            <button onclick="location.reload()" class="p-4 text-red-400 hover:bg-red-500 hover:text-white transition text-center border-t border-gray-800"><i class="fa-solid fa-power-off ml-2"></i>تسجيل خروج</button>
+        </aside>
+
+        <main class="flex-1 flex flex-col bg-gray-50 h-screen overflow-hidden min-w-0">
+            <header class="h-16 bg-white shadow-sm flex items-center justify-between px-4 md:px-6 z-30">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleSidebar()" class="md:hidden text-gray-600 text-xl p-2"><i class="fa-solid fa-bars"></i></button>
+                    <h2 id="page-title" class="font-bold text-lg md:text-xl truncate">إدارة المنتجات</h2>
+                </div>
+                <a href="index.html" target="_blank" class="bg-medical-light text-medical hover:bg-medical hover:text-white transition px-3 py-1.5 md:px-4 md:py-2 rounded text-sm md:text-base font-bold whitespace-nowrap">زيارة المتجر <i class="fa-solid fa-arrow-up-right-from-square text-xs md:text-sm"></i></a>
+            </header>
+
+            <div class="flex-1 overflow-y-auto p-4 md:p-6 pb-20">
+                
+                <div id="tab-products" class="block animate-fade-in w-full">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                        <h3 class="font-bold text-lg">المنتجات الحالية</h3>
+                        <button onclick="document.getElementById('modal-product').classList.remove('hidden')" class="bg-medical-green hover:bg-green-600 transition text-white px-4 py-2 rounded shadow font-bold text-sm w-full sm:w-auto"><i class="fa-solid fa-plus ml-1"></i> إضافة منتج جديد</button>
+                    </div>
+                    <div class="bg-white border rounded shadow-sm overflow-hidden">
+                        <div class="table-container overflow-x-auto w-full">
+                            <table class="w-full text-right min-w-[600px]">
+                                <thead class="bg-gray-50 border-b"><tr><th class="p-3">الصورة</th><th class="p-3">الاسم</th><th class="p-3">القسم</th><th class="p-3">السعر</th><th class="p-3 text-center">إجراءات</th></tr></thead>
+                                <tbody id="admin-product-list" class="divide-y text-sm md:text-base"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-categories" class="hidden animate-fade-in max-w-4xl mx-auto w-full">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
+                        <h3 class="font-bold text-lg">أقسام المتجر</h3>
+                        <button onclick="document.getElementById('modal-category').classList.remove('hidden')" class="bg-medical hover:bg-medical-dark transition text-white px-4 py-2 rounded shadow font-bold text-sm w-full sm:w-auto"><i class="fa-solid fa-folder-plus ml-1"></i> إضافة قسم جديد</button>
+                    </div>
+                    <div class="bg-white border rounded shadow-sm overflow-hidden">
+                        <div class="table-container overflow-x-auto w-full">
+                            <table class="w-full text-right min-w-[400px]">
+                                <thead class="bg-gray-50 border-b"><tr><th class="p-3">الرقم</th><th class="p-3">اسم القسم</th><th class="p-3 text-center">إجراء</th></tr></thead>
+                                <tbody id="admin-category-list" class="divide-y text-sm md:text-base"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-settings" class="hidden animate-fade-in max-w-3xl mx-auto space-y-6 w-full">
+                    <div class="bg-white p-4 md:p-6 border rounded shadow-sm">
+                        <h3 class="font-bold text-lg mb-4 border-b pb-2 text-medical-dark"><i class="fa-solid fa-address-card ml-1"></i> بيانات الاتصال</h3>
+                        <form id="settings-form" class="space-y-4 text-sm md:text-base">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div><label class="block font-bold mb-1">الهاتف</label><input type="text" id="set-phone" name="phone" class="w-full border p-2 rounded bg-gray-50 focus:border-medical outline-none" dir="ltr"></div>
+                                <div><label class="block font-bold mb-1 text-green-600">واتساب</label><input type="text" id="set-whatsapp" name="whatsapp" class="w-full border p-2 rounded bg-gray-50 focus:border-green-500 outline-none" dir="ltr"></div>
+                            </div>
+                            <div><label class="block font-bold mb-1">البريد الإلكتروني</label><input type="email" id="set-email" name="email" class="w-full border p-2 rounded bg-gray-50 focus:border-medical outline-none" dir="ltr"></div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div><label class="block font-bold mb-1 text-blue-600">فيسبوك</label><input type="url" id="set-fb" name="facebook" class="w-full border p-2 rounded bg-gray-50 focus:border-blue-500 outline-none" dir="ltr"></div>
+                                <div><label class="block font-bold mb-1 text-blue-400">تويتر</label><input type="url" id="set-tw" name="twitter" class="w-full border p-2 rounded bg-gray-50 focus:border-blue-400 outline-none" dir="ltr"></div>
+                            </div>
+                            <button type="submit" class="bg-medical hover:bg-medical-dark transition text-white px-6 py-2 rounded font-bold w-full mt-4 shadow">حفظ معلومات الاتصال</button>
+                        </form>
+                    </div>
+
+                    <div class="bg-white p-4 md:p-6 border rounded shadow-sm border-t-4 border-t-red-500">
+                        <h3 class="font-bold text-lg mb-4 border-b pb-2 text-red-600"><i class="fa-solid fa-shield-halved ml-1"></i> الأمان وتغيير المرور</h3>
+                        <form id="password-form" class="space-y-4 text-sm md:text-base">
+                            <div><label class="block font-bold mb-1">المرور الحالية</label><input type="password" name="old_password" required class="w-full border p-2 rounded bg-gray-50 focus:border-red-500 outline-none"></div>
+                            <div><label class="block font-bold mb-1">المرور الجديدة</label><input type="password" name="new_password" required class="w-full border p-2 rounded bg-gray-50 focus:border-red-500 outline-none"></div>
+                            <button type="submit" class="bg-red-500 hover:bg-red-600 transition text-white px-6 py-2 rounded font-bold w-full shadow">تحديث كلمة المرور</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-product" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl w-full max-w-md p-5 md:p-6 shadow-2xl overflow-y-auto max-h-[90vh]">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="font-bold text-lg text-medical-dark">إضافة منتج جديد</h3>
+                <button onclick="document.getElementById('modal-product').classList.add('hidden')" class="text-gray-400 hover:text-red-500 text-2xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="add-product-form" class="space-y-3 text-sm md:text-base" enctype="multipart/form-data">
+                <div><label class="block font-bold mb-1 text-gray-700">اسم المنتج</label><input type="text" name="name" required class="w-full border border-gray-300 p-2 rounded focus:border-medical focus:ring-1 focus:ring-medical outline-none transition"></div>
+                <div><label class="block font-bold mb-1 text-gray-700">القسم</label><select name="category_id" id="category-select" required class="w-full border border-gray-300 p-2 rounded focus:border-medical outline-none bg-slate-50"></select></div>
+                <div><label class="block font-bold mb-1 text-gray-700">السعر (ج.س)</label><input type="number" name="price" required class="w-full border border-gray-300 p-2 rounded focus:border-medical outline-none"></div>
+                <div><label class="block font-bold mb-1 text-gray-700">صورة المنتج</label><input type="file" name="image_file" accept="image/*" required class="w-full border border-gray-300 p-2 rounded text-left bg-slate-50 w-full text-xs md:text-sm"></div>
+                <div class="pt-4 border-t"><button type="submit" id="add-prod-btn" class="w-full bg-medical-green hover:bg-green-600 transition text-white py-3 rounded font-bold shadow-md">إضافة المنتج الآن</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-edit-product" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl w-full max-w-md p-5 md:p-6 shadow-2xl overflow-y-auto max-h-[90vh]">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="font-bold text-lg text-blue-600">تعديل المنتج</h3>
+                <button onclick="document.getElementById('modal-edit-product').classList.add('hidden')" class="text-gray-400 hover:text-red-500 text-2xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="edit-product-form" class="space-y-3 text-sm md:text-base" enctype="multipart/form-data">
+                <input type="hidden" name="id" id="edit-id">
+                <div><label class="block font-bold mb-1">اسم المنتج</label><input type="text" name="name" id="edit-name" required class="w-full border border-gray-300 p-2 rounded focus:border-blue-500 outline-none transition"></div>
+                <div><label class="block font-bold mb-1">القسم</label><select name="category_id" id="edit-category-select" required class="w-full border border-gray-300 p-2 rounded bg-slate-50 outline-none focus:border-blue-500"></select></div>
+                <div><label class="block font-bold mb-1">السعر (ج.س)</label><input type="number" name="price" id="edit-price" required class="w-full border border-gray-300 p-2 rounded focus:border-blue-500 outline-none"></div>
+                <div>
+                    <label class="block font-bold mb-1">صورة المنتج <span class="text-xs text-gray-400 font-normal">(اختياري)</span></label>
+                    <input type="file" name="image_file" accept="image/*" class="w-full border border-gray-300 p-2 rounded bg-slate-50 w-full text-xs md:text-sm">
+                    <p class="text-xs text-blue-500 mt-1">اتركه فارغاً إذا كنت لا تريد تغيير الصورة.</p>
+                </div>
+                <div class="pt-4 border-t"><button type="submit" id="edit-prod-btn" class="w-full bg-blue-500 hover:bg-blue-600 transition text-white py-3 rounded font-bold shadow-md">حفظ التعديلات</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-category" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-xl w-full max-w-md p-5 md:p-6 shadow-2xl">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h3 class="font-bold text-lg text-medical-dark">إضافة قسم جديد</h3>
+                <button onclick="document.getElementById('modal-category').classList.add('hidden')" class="text-gray-400 hover:text-red-500 text-2xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="add-category-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold mb-1 text-gray-700">اسم القسم</label>
+                    <input type="text" name="name" required class="w-full border border-gray-300 p-2 rounded focus:border-medical outline-none" dir="auto" placeholder="مثال: أجهزة مختبرية">
+                </div>
+                <div class="pt-2">
+                    <button type="submit" class="w-full bg-medical hover:bg-medical-dark transition text-white py-3 rounded font-bold shadow-md">حفظ القسم</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

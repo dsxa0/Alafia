@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>متجر العافية | الرئيسية</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            light: '#bae6fd',
+                            DEFAULT: '#0ea5e9',
+                            dark: '#0284c7',
+                            900: '#0c4a6e',
+                            green: '#10b981'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="text-slate-800 flex flex-col min-h-screen selection:bg-medical selection:text-white">
+
+    <header class="glass-nav shadow-sm border-b border-slate-200 sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            
+            <button onclick="toggleMobileMenu()" class="md:hidden text-slate-700 text-2xl p-2 focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <a href="index.html" class="flex items-center justify-center transform hover:scale-105 transition duration-300">
+                <img src="assets/Gemini_Generated_Image_mdcq84mdcq84mdcq.jpg" alt="شعار العافية" class="h-12 sm:h-14 md:h-16 lg:h-20 object-contain mix-blend-multiply" onerror="this.src='https://via.placeholder.com/200x80?text=Al-Aafia'">
+            </a>
+
+            <nav class="hidden md:flex gap-6 lg:gap-8 font-bold text-slate-600">
+                <a href="index.html" class="text-medical border-b-2 border-medical transition py-2 text-sm lg:text-base">الرئيسية</a>
+                <a href="shop.html" class="hover:text-medical border-b-2 border-transparent hover:border-medical transition py-2 text-sm lg:text-base">المنتجات</a>
+                <a href="#features" class="hover:text-medical border-b-2 border-transparent hover:border-medical transition py-2 text-sm lg:text-base">مميزاتنا</a>
+            </nav>
+
+            <button onclick="toggleCart()" class="relative p-2 sm:p-3 text-slate-700 hover:text-medical bg-slate-100 hover:bg-medical-50 rounded-full transition duration-300 shadow-sm">
+                <i class="fa-solid fa-cart-shopping text-lg sm:text-xl"></i>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] sm:text-xs font-bold rounded-full h-5 w-5 sm:h-6 sm:w-6 flex items-center justify-center shadow-md border border-white">0</span>
+            </button>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-[60] hidden transition-opacity">
+        <div class="bg-white w-3/4 h-full shadow-2xl p-6 transform transition-transform duration-300 flex flex-col">
+            <div class="flex justify-between items-center mb-8 pb-4 border-b border-slate-100">
+                <img src="assets/Gemini_Generated_Image_mdcq84mdcq84mdcq.jpg" alt="الشعار" class="h-10 object-contain mix-blend-multiply">
+                <button onclick="toggleMobileMenu()" class="text-slate-500 hover:text-red-500 text-2xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col gap-6 font-bold text-lg text-slate-700">
+                <a href="index.html" class="text-medical flex items-center gap-3"><i class="fa-solid fa-house"></i> الرئيسية</a>
+                <a href="shop.html" class="hover:text-medical flex items-center gap-3"><i class="fa-solid fa-box-open text-medical"></i> المنتجات</a>
+                <a href="#features" onclick="toggleMobileMenu()" class="hover:text-medical flex items-center gap-3"><i class="fa-solid fa-star text-medical"></i> مميزاتنا</a>
+                <a href="#footer" onclick="toggleMobileMenu()" class="hover:text-medical flex items-center gap-3"><i class="fa-solid fa-phone text-medical"></i> تواصل معنا</a>
+            </nav>
+        </div>
+    </div>
+
+    <section class="bg-gradient-to-b from-medical-50 to-white py-12 md:py-20 relative overflow-hidden">
+        <div class="absolute top-0 right-0 -mt-10 -mr-10 md:-mt-20 md:-mr-20 w-40 h-40 md:w-80 md:h-80 bg-medical-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -mb-10 -ml-10 md:-mb-20 md:-ml-20 w-40 h-40 md:w-80 md:h-80 bg-green-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-8 md:gap-12 relative z-10">
+            <div class="lg:w-1/2 space-y-6 md:space-y-8 text-center lg:text-right">
+                <span class="bg-medical-100 text-medical-dark font-bold px-3 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm inline-block shadow-sm">🌟 المتجر الطبي الأول في السودان</span>
+                
+                <h2 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-slate-800 leading-tight">
+                    جهز عيادتك أو مختبرك <br class="hidden sm:block"> 
+                    <span class="text-transparent bg-clip-text bg-gradient-to-l from-medical-dark to-medical">بأفضل المعدات</span>
+                </h2>
+                
+                <p class="text-base md:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed px-2 md:px-0">
+                    نوفر لك أفضل وأجود الأجهزة الطبية والمخبرية المعتمدة بأسعار تنافسية تناسب جميع الاحتياجات، مع ضمان حقيقي وخدمة ما بعد البيع.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start px-4 md:px-0">
+                    <a href="shop.html" class="w-full sm:w-auto bg-medical hover:bg-medical-dark text-white px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold shadow-lg shadow-medical/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 text-base md:text-lg">
+                        <i class="fa-solid fa-bag-shopping"></i> تسوق المنتجات
+                    </a>
+                    <a href="#footer" class="w-full sm:w-auto bg-white text-slate-700 hover:text-medical border border-slate-200 px-6 md:px-8 py-3 md:py-4 rounded-xl font-bold shadow-sm transition-all flex items-center justify-center gap-2 text-base md:text-lg">
+                        <i class="fa-solid fa-phone"></i> تواصل معنا
+                    </a>
+                </div>
+            </div>
+            
+            <div class="lg:w-1/2 flex justify-center w-full mt-8 lg:mt-0">
+                <div class="relative w-full max-w-sm md:max-w-md lg:max-w-lg">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-medical to-medical-green rounded-2xl md:rounded-3xl transform rotate-3 scale-105 opacity-20 blur-lg"></div>
+                    
+                    <div class="relative h-[250px] sm:h-[300px] md:h-[400px] bg-white rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden border border-slate-100 group">
+                        <img src="assets/Gemini_Generated_Image_825mrj825mrj825m.jpg" alt="معدات طبية - العافية" class="w-full h-full object-contain p-2 md:p-4 transition-transform duration-1000 group-hover:scale-105" onerror="this.src='https://via.placeholder.com/800?text=Alafia+Store'">
+                    </div>
+                    
+                    <div class="absolute -bottom-4 -left-2 md:-bottom-6 md:-left-6 bg-white p-2 md:p-4 rounded-xl md:rounded-2xl shadow-xl flex items-center gap-2 md:gap-4 animate-bounce" style="animation-duration: 3s;">
+                        <div class="bg-green-100 text-green-600 w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center text-sm md:text-xl">
+                            <i class="fa-solid fa-shield-check"></i>
+                        </div>
+                        <div>
+                            <p class="text-[10px] md:text-xs text-slate-500 font-bold">مضمونة 100%</p>
+                            <p class="text-xs md:text-sm text-slate-800 font-bold">جودة أصلية</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-10 md:py-16 bg-white border-y border-slate-200">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 md:bg-transparent hover:bg-slate-50 transition border border-slate-100 md:border-none">
+                    <div class="w-12 h-12 md:w-14 md:h-14 bg-medical-50 text-medical rounded-full flex items-center justify-center text-xl md:text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-truck-fast"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base md:text-lg text-slate-800">توصيل للولايات</h3>
+                        <p class="text-xs md:text-sm text-slate-500 mt-1">خدمة شحن للخرطوم والولايات.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 md:bg-transparent hover:bg-slate-50 transition border border-slate-100 md:border-none">
+                    <div class="w-12 h-12 md:w-14 md:h-14 bg-medical-50 text-medical rounded-full flex items-center justify-center text-xl md:text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-tags"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base md:text-lg text-slate-800">أفضل الأسعار</h3>
+                        <p class="text-xs md:text-sm text-slate-500 mt-1">نضمن أسعاراً منافسة جداً في السوق.</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-4 p-4 rounded-xl bg-slate-50 md:bg-transparent hover:bg-slate-50 transition border border-slate-100 md:border-none sm:col-span-2 md:col-span-1">
+                    <div class="w-12 h-12 md:w-14 md:h-14 bg-medical-50 text-medical rounded-full flex items-center justify-center text-xl md:text-2xl flex-shrink-0">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base md:text-lg text-slate-800">دعم فني متخصص</h3>
+                        <p class="text-xs md:text-sm text-slate-500 mt-1">جاهزون للرد على استفساراتكم التقنية.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-16 md:py-24 flex-grow bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10 md:mb-16">
+                <span class="text-medical font-bold tracking-wider text-xs md:text-sm">تسوق الآن</span>
+                <h2 class="text-2xl md:text-4xl font-bold text-slate-800 mt-2">
+                   آخر اضافة <span class="text-medical">للمتجر</span>
+                </h2>
+                <div class="w-16 md:w-24 h-1 bg-medical mx-auto mt-4 md:mt-6 rounded-full"></div>
+            </div>
+            
+            <div id="loading-spinner" class="flex flex-col justify-center items-center py-12 md:py-20">
+                <i class="fa-solid fa-circle-notch fa-spin text-4xl md:text-5xl text-medical mb-4"></i>
+                <span class="text-slate-500 font-bold text-base md:text-lg">جاري تحميل المنتجات...</span>
+            </div>
+
+            <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 hidden">
+            </div>
+
+            <div class="text-center mt-12 md:mt-16 hidden" id="view-all-btn">
+                <a href="shop.html" class="inline-block border-2 border-medical text-medical hover:bg-medical hover:text-white px-8 py-3 md:py-4 rounded-xl font-bold transition-all duration-300 shadow-sm hover:shadow-lg text-sm md:text-base">
+                    عرض كل المنتجات <i class="fa-solid fa-arrow-left mr-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer" class="bg-slate-900 text-white pt-12 md:pt-16 pb-8 mt-auto border-t-4 border-medical">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 items-start">
+            <div class="flex flex-col items-center md:items-start text-center md:text-right">
+                <div class="bg-white p-3 rounded-xl mb-4 shadow-lg inline-block">
+                    <img src="assets/Gemini_Generated_Image_mdcq84mdcq84mdcq.jpg" alt="شعار العافية" class="h-10 md:h-14 object-contain mix-blend-multiply" onerror="this.src='https://via.placeholder.com/200x80?text=Al-Aafia'">
+                </div>
+                <p class="text-slate-400 leading-relaxed text-sm md:text-base px-4 md:px-0">متجر العافية، وجهتك الأولى للمعدات والأجهزة الطبية والمخبرية الموثوقة. نهتم بتوفير أعلى معايير الجودة لخدمة القطاع الصحي.</p>
+            </div>
+            
+            <div class="text-center md:text-right hidden sm:block">
+                <h4 class="text-lg md:text-xl font-bold mb-4 md:mb-6 text-white inline-block relative">
+                    روابط هامة
+                    <span class="absolute bottom-0 right-0 w-1/2 h-1 bg-medical -mb-2 rounded-full"></span>
+                </h4>
+                <ul class="space-y-2 md:space-y-3 text-slate-400 font-medium text-sm md:text-base">
+                    <li><a href="index.html" class="hover:text-medical transition flex items-center justify-center md:justify-start gap-2"><i class="fa-solid fa-angle-left text-xs"></i> الرئيسية</a></li>
+                    <li><a href="shop.html" class="hover:text-medical transition flex items-center justify-center md:justify-start gap-2"><i class="fa-solid fa-angle-left text-xs"></i> المنتجات</a></li>
+                    <li><a href="#features" class="hover:text-medical transition flex items-center justify-center md:justify-start gap-2"><i class="fa-solid fa-angle-left text-xs"></i> مميزاتنا</a></li>
+                </ul>
+            </div>
+            
+            <div class="text-center md:text-right">
+                <h4 class="text-lg md:text-xl font-bold mb-4 md:mb-6 text-white inline-block relative">
+                    تواصل معنا
+                    <span class="absolute bottom-0 right-0 w-1/2 h-1 bg-medical -mb-2 rounded-full"></span>
+                </h4>
+                <div class="space-y-3 md:space-y-4 text-slate-300 text-sm md:text-base w-full max-w-xs mx-auto md:mx-0">
+                    <p class="flex items-center justify-center md:justify-start gap-3 bg-slate-800 p-2 md:p-3 rounded-lg border border-slate-700">
+                        <i class="fa-solid fa-phone text-medical"></i> 
+                        <span id="phone-text" dir="ltr" class="font-bold">...</span>
+                    </p>
+                    <p class="flex items-center justify-center md:justify-start gap-3 bg-slate-800 p-2 md:p-3 rounded-lg border border-slate-700 break-all">
+                        <i class="fa-solid fa-envelope text-medical flex-shrink-0"></i> 
+                        <span id="email-text" dir="ltr" class="font-bold text-xs sm:text-sm md:text-base">...</span>
+                    </p>
+                </div>
+                
+                <div class="flex justify-center md:justify-start gap-3 md:gap-4 mt-6">
+                    <a id="fb-link" href="#" class="w-8 h-8 md:w-10 md:h-10 bg-slate-800 hover:bg-blue-600 text-white rounded-full flex items-center justify-center transition shadow-lg"><i class="fa-brands fa-facebook-f text-sm md:text-base"></i></a>
+                    <a id="tw-link" href="#" class="w-8 h-8 md:w-10 md:h-10 bg-slate-800 hover:bg-blue-400 text-white rounded-full flex items-center justify-center transition shadow-lg"><i class="fa-brands fa-twitter text-sm md:text-base"></i></a>
+                    <a id="wa-link" href="#" class="w-8 h-8 md:w-10 md:h-10 bg-slate-800 hover:bg-green-500 text-white rounded-full flex items-center justify-center transition shadow-lg"><i class="fa-brands fa-whatsapp text-sm md:text-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container mx-auto px-4 mt-8 md:mt-12 pt-6 md:pt-8 border-t border-slate-800 text-center text-slate-500 text-xs md:text-sm font-bold">
+            &copy; 2026 جميع الحقوق محفوظة لمتجر العافية للمعدات الطبية.
+        </div>
+    </footer>
+
+    <a id="floating-wa" href="#" target="_blank" class="fixed bottom-6 left-6 md:bottom-8 md:left-8 bg-[#25D366] text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center text-3xl md:text-4xl shadow-2xl z-[45] hover:bg-green-500 transition-colors wa-float hidden">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <div id="cart-sidebar" class="fixed inset-y-0 left-0 w-full sm:w-[350px] md:w-[400px] bg-white shadow-2xl transform -translate-x-full transition-transform duration-300 z-[70] flex flex-col">
+        <div class="p-4 md:p-5 bg-slate-900 text-white flex justify-between items-center border-b-4 border-medical">
+            <h2 class="text-lg md:text-xl font-bold flex items-center gap-2">
+                <i class="fa-solid fa-basket-shopping text-medical"></i> سلة مشترياتك
+            </h2>
+            <button onclick="toggleCart()" class="text-slate-400 hover:text-white bg-slate-800 hover:bg-red-500 w-8 h-8 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 bg-slate-50">
+            <div class="text-center text-slate-400 mt-16 md:mt-20 flex flex-col items-center" id="empty-cart-msg">
+                <div class="w-20 h-20 md:w-24 md:h-24 bg-slate-100 rounded-full flex items-center justify-center mb-3 md:mb-4 text-3xl md:text-4xl">
+                    <i class="fa-solid fa-cart-arrow-down"></i>
+                </div>
+                <p class="font-bold text-base md:text-lg text-slate-600">السلة فارغة حالياً</p>
+                <p class="text-xs md:text-sm mt-1 md:mt-2">قم بإضافة بعض الأجهزة الرائعة!</p>
+            </div>
+        </div>
+        
+        <div class="p-4 md:p-6 bg-white border-t border-slate-200 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
+            <div class="flex justify-between items-center mb-4 md:mb-6">
+                <span class="text-slate-500 font-bold text-sm md:text-base">المبلغ الإجمالي:</span>
+                <span id="cart-total" class="text-xl md:text-2xl font-bold text-slate-800">0 <span class="text-xs md:text-sm text-slate-500">ج.س</span></span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 md:py-4 rounded-xl transition shadow-lg shadow-green-500/30 flex justify-center items-center gap-2 text-base md:text-lg">
+                <i class="fa-brands fa-whatsapp text-xl md:text-2xl"></i> إرسال الطلب عبر واتساب
+            </button>
+        </div>
+    </div>
+    
+    <div id="cart-overlay" onclick="closeAllOverlays()" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[55] transition-opacity"></div>
+
+    <div id="toast" class="fixed bottom-4 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:right-6 bg-slate-800 text-white px-4 py-3 md:px-6 md:py-4 rounded-xl shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 z-[80] flex items-center gap-3 md:gap-4 border-b-4 md:border-b-0 md:border-r-4 border-medical w-11/12 max-w-sm md:w-auto md:min-w-[300px]">
+        <div class="w-8 h-8 md:w-10 md:h-10 bg-medical/20 rounded-full flex items-center justify-center text-medical flex-shrink-0">
+            <i id="toast-icon" class="fa-solid fa-check text-lg md:text-xl"></i>
+        </div>
+        <span id="toast-message" class="font-bold text-sm md:text-base">تمت الإضافة بنجاح!</span>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

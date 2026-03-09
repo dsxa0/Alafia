@@ -1,0 +1,58 @@
+@font-face {
+    font-family: 'AlafiaFont';
+    src: url('../assets/fonts/TheYearofHandicrafts-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AlafiaFont';
+    src: url('../assets/fonts/TheYearofHandicrafts-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body { 
+    font-family: 'AlafiaFont', sans-serif; 
+    background-color: #f3f4f6; 
+} 
+
+.active-nav { 
+    background-color: #374151; 
+    border-right: 4px solid #10b981; 
+}
+
+.table-container::-webkit-scrollbar { height: 6px; }
+.table-container::-webkit-scrollbar-track { background: #f1f5f9; }
+.table-container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+#dashboard { display: none; }
+#dashboard.show { display: flex !important; }
+
+@media (max-width: 767px) {
+    #sidebar {
+        position: fixed !important;
+    }
+}
+
+@media (min-width: 768px) {
+    #sidebar {
+        position: relative !important;
+        transform: translateX(0) !important;
+    }
+}
+
+.animate-fade-in { 
+    animation: fadeIn 0.3s ease-in-out; 
+} 
+
+@keyframes fadeIn { 
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    } 
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    } 
+}
