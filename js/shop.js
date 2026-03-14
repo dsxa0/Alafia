@@ -106,25 +106,25 @@ function filterProducts(catId) {
     }
 
     container.innerHTML = filtered.map(p => `
-        <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 overflow-hidden flex flex-col group relative">
+        <div class="bg-white rounded-xl md:rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 overflow-hidden flex flex-col group relative">
             
-            <span class="absolute top-3 right-3 bg-medical text-white text-[10px] md:text-xs font-bold px-2 py-1 md:px-3 md:py-1 rounded-full z-10 shadow-sm">${p.category_name || 'قسم عام'}</span>
+            <span class="absolute top-2 right-2 bg-medical text-white text-[9px] md:text-xs font-bold px-1.5 py-0.5 md:px-3 md:py-1 rounded-full z-10 shadow-sm leading-tight max-w-[70%] truncate">${p.category_name || 'قسم عام'}</span>
 
-            <div class="h-48 sm:h-56 md:h-64 overflow-hidden bg-white flex items-center justify-center p-4 md:p-6 relative border-b border-slate-50">
+            <div class="h-32 sm:h-44 md:h-64 overflow-hidden bg-white flex items-center justify-center p-2 md:p-6 relative border-b border-slate-50">
                 <img src="${p.image_url}" alt="${p.name}" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-500 drop-shadow-sm" onerror="this.src='https://via.placeholder.com/400?text=No+Image'">
             </div>
             
-            <div class="p-4 md:p-6 flex flex-col flex-grow bg-slate-50/50">
-                <h3 class="font-bold text-base md:text-lg text-slate-800 mb-2 line-clamp-2 leading-snug" title="${p.name}">${p.name}</h3>
+            <div class="p-2.5 md:p-6 flex flex-col flex-grow bg-slate-50/50">
+                <h3 class="font-bold text-xs md:text-lg text-slate-800 mb-1 md:mb-2 line-clamp-2 leading-snug" title="${p.name}">${p.name}</h3>
                 
-                <div class="mt-auto pt-3 md:pt-4 flex flex-col gap-3 md:gap-4">
+                <div class="mt-auto pt-2 md:pt-4 flex flex-col gap-2 md:gap-4">
                     <div class="flex items-end gap-1">
-                        <span class="text-medical-dark font-black text-xl md:text-2xl">${parseFloat(p.price).toLocaleString()}</span>
-                        <span class="text-xs md:text-sm font-bold text-slate-500 mb-1">ج.س</span>
+                        <span class="text-medical-dark font-black text-base md:text-2xl">${parseFloat(p.price).toLocaleString()}</span>
+                        <span class="text-[10px] md:text-sm font-bold text-slate-500 mb-0.5">ج.س</span>
                     </div>
                     
-                    <button onclick="addToCart(${p.id})" class="w-full bg-medical-50 text-medical hover:bg-medical hover:text-white border border-medical-100 hover:border-medical py-2.5 md:py-3 rounded-xl font-bold text-sm md:text-base transition-all duration-300 flex items-center justify-center gap-2 group-hover:shadow-md active:scale-95">
-                        <i class="fa-solid fa-cart-plus"></i> أضف للسلة
+                    <button onclick="addToCart(${p.id})" class="w-full bg-medical-50 text-medical hover:bg-medical hover:text-white border border-medical-100 hover:border-medical py-2 md:py-3 rounded-lg md:rounded-xl font-bold text-xs md:text-base transition-all duration-300 flex items-center justify-center gap-1 md:gap-2 group-hover:shadow-md active:scale-95">
+                        <i class="fa-solid fa-cart-plus text-xs md:text-base"></i> <span class="hidden sm:inline">أضف للسلة</span><span class="sm:hidden">أضف</span>
                     </button>
                 </div>
             </div>
