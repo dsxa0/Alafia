@@ -131,4 +131,38 @@ if ($action === 'update_settings') {
     echo json_encode(['status' => 'success']);
     exit;
 }
+
+if ($action === 'upload_promo_banner') {
+    if (isset($_FILES['banner_image']) && $_FILES['banner_image']['error'] === UPLOAD_ERR_OK) {
+        $upload_dir = 'uploads/';
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+
+        $file_ext = strtolower(pathinfo($_FILES['banner_image']['name'], PATHINFO_EXTENSION));
+        if (in_array($file_ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
+            $new_path = $upload_dir . uniqid('banner_', true) . '.' . $file_ext;
+            if (move_uploaded_file($_FILES['banner_image']['tmp_name'], $new_path)) {
+                $old = $pdo->query("SELECT image_url FROM promo_banners ORDER BY id DESC LIMIT 1")->fetchColumn();
+                if ($old && file_exists($old)) unlink($old);
+                $pdo->exec("DELETE FROM promo_banners");
+                $pdo->prepare("INSERT INTO promo_banners (image_url) VALUES (?)")->execute([$new_path]);
+                echo json_encode(['status' => 'success', 'image_url' => $new_path]);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'فشل رفع الملف']);
+            }
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'نوع الملف غير مدعوم']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'لم يتم اختيار صورة']);
+    }
+    exit;
+}
+
+if ($action === 'delete_promo_banner') {
+    $old = $pdo->query("SELECT image_url FROM promo_banners ORDER BY id DESC LIMIT 1")->fetchColumn();
+    if ($old && file_exists($old)) unlink($old);
+    $pdo->exec("DELETE FROM promo_banners");
+    echo json_encode(['status' => 'success']);
+    exit;
+}
 ?>

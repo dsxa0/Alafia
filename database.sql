@@ -26,3 +26,10 @@ CREATE TABLE IF NOT EXISTS settings (
     setting_value TEXT NOT NULL
 );
 
+ 5. جدول بانر العروض
+CREATE TABLE IF NOT EXISTS promo_banners (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    image_url VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+

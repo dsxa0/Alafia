@@ -19,12 +19,16 @@ try {
     $stmtSettings = $pdo->query("SELECT setting_key, setting_value FROM settings");
     $settings = $stmtSettings->fetchAll(PDO::FETCH_ASSOC);
 
+    $stmtBanner = $pdo->query("SELECT * FROM promo_banners ORDER BY id DESC LIMIT 1");
+    $banner = $stmtBanner->fetch(PDO::FETCH_ASSOC);
+
     echo json_encode([
         'status' => 'success',
         'data' => [
             'categories' => $categories,
             'products' => $products,
-            'settings' => $settings
+            'settings' => $settings,
+            'promo_banner' => $banner ?: null
         ]
     ]);
 

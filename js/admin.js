@@ -94,6 +94,16 @@ async function loadData() {
             const s = {}; data.data.settings.forEach(x => s[x.setting_key] = x.setting_value);
             document.getElementById('set-phone').value = s.phone || ''; document.getElementById('set-whatsapp').value = s.whatsapp || '';
             document.getElementById('set-email').value = s.email || ''; document.getElementById('set-fb').value = s.facebook || ''; document.getElementById('set-tw').value = s.twitter || '';
+
+            const banner = data.data.promo_banner;
+            if (banner) {
+                document.getElementById('current-banner-preview').src = banner.image_url;
+                document.getElementById('current-banner-wrap').classList.remove('hidden');
+                document.getElementById('no-banner-msg').classList.add('hidden');
+            } else {
+                document.getElementById('current-banner-wrap').classList.add('hidden');
+                document.getElementById('no-banner-msg').classList.remove('hidden');
+            }
         }
     } catch(e) { console.error(e); }
 }
@@ -164,9 +174,50 @@ document.getElementById('password-form').addEventListener('submit', async (e) =>
 });
 
 function switchTab(t) {
-    ['products', 'categories', 'settings'].forEach(id => { document.getElementById('tab-' + id).classList.add('hidden'); document.getElementById('nav-' + id).classList.remove('active-nav'); });
+    ['products', 'categories', 'promo', 'settings'].forEach(id => { document.getElementById('tab-' + id).classList.add('hidden'); document.getElementById('nav-' + id).classList.remove('active-nav'); });
     document.getElementById('tab-' + t).classList.remove('hidden'); document.getElementById('nav-' + t).classList.add('active-nav');
-    const titles = { 'products': 'إدارة المنتجات', 'categories': 'إدارة الأقسام', 'settings': 'إعدادات المتجر' }; document.getElementById('page-title').innerText = titles[t];
+    const titles = { 'products': 'إدارة المنتجات', 'categories': 'إدارة الأقسام', 'promo': 'إدارة العروض', 'settings': 'إعدادات المتجر' }; document.getElementById('page-title').innerText = titles[t];
     
+    if (t === 'promo') loadPromoBanner();
     if(window.innerWidth < 768) toggleSidebar();
+}
+
+async function loadPromoBanner() {
+    try {
+        const res = await fetch('api.php');
+        const data = await res.json();
+        const banner = data.data.promo_banner;
+        if (banner) {
+            document.getElementById('current-banner-preview').src = banner.image_url;
+            document.getElementById('current-banner-wrap').classList.remove('hidden');
+            document.getElementById('no-banner-msg').classList.add('hidden');
+        } else {
+            document.getElementById('current-banner-wrap').classList.add('hidden');
+            document.getElementById('no-banner-msg').classList.remove('hidden');
+        }
+    } catch(e) { console.error(e); }
+}
+
+document.getElementById('promo-upload-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('upload-banner-btn');
+    const fileInput = document.getElementById('banner-file-input');
+    if (!fileInput.files.length) { showAlert('الرجاء اختيار صورة أولاً'); return; }
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin ml-1"></i> جاري الرفع...'; btn.disabled = true;
+    const fd = new FormData(e.target); fd.append('action', 'upload_promo_banner');
+    try {
+        const res = await fetch('admin_api.php', { method: 'POST', body: fd });
+        const result = await res.json();
+        if (result.status === 'success') { e.target.reset(); loadPromoBanner(); showAlert('تم رفع صورة العرض بنجاح!'); }
+        else { showAlert(result.message || 'حدث خطأ'); }
+    } catch(err) { showAlert('خطأ في الاتصال'); }
+    finally { btn.innerHTML = '<i class="fa-solid fa-upload ml-1"></i> رفع الصورة'; btn.disabled = false; }
+});
+
+async function deletePromoBanner() {
+    if (!confirm('حذف صورة العرض؟')) return;
+    const fd = new FormData(); fd.append('action', 'delete_promo_banner');
+    await fetch('admin_api.php', { method: 'POST', body: fd });
+    loadPromoBanner();
+    showAlert('تم حذف صورة العرض');
 }
